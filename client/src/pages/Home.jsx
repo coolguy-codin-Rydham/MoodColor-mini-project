@@ -11,7 +11,7 @@ const Home = () => {
 
   const getAllMoods = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/mood/', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/mood/`, {
         withCredentials: true,
       });
       setMoods(response.data.palettes);

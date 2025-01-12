@@ -30,7 +30,7 @@ const Login = ({setUser}) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/admin/admin-login",
+        `${import.meta.env.VITE_API_URL}admin/admin-login`,
         { username: data.username, password: data.password },
         { withCredentials: true }
       );

@@ -17,7 +17,7 @@ const Admin = () => {
         return ;
       }
       try{
-        const response = await axios.get("http://localhost:3000/api/admin/me", {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin/me`, {
           withCredentials: true,
         })
         console.log("Auth me status: ", response.status)
