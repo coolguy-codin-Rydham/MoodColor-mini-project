@@ -3364,3 +3364,22 @@
 {"level":"info","message":"GET /api/admin/mood/all","service":"user-service"}
 {"level":"info","message":"GET /api/mood/","service":"user-service"}
 {"level":"info","message":"GET /api/mood/","service":"user-service"}
+{"level":"info","message":"Database connected successfully","service":"user-service"}
+{"level":"info","message":"GET /api/mood/","service":"user-service"}
+{"level":"info","message":"GET /api/mood/","service":"user-service"}
+{"level":"info","message":"GET /api/admin/me","service":"user-service"}
+{"level":"info","message":"GET /api/admin/me","service":"user-service"}
+{"level":"info","message":"GET /api/admin/mood/all","service":"user-service"}
+{"level":"info","message":"GET /api/admin/mood/all","service":"user-service"}
+{"level":"info","message":"GET /api/admin/mood/all","service":"user-service"}
+{"level":"info","message":"GET /api/mood/","service":"user-service"}
+{"level":"info","message":"GET /api/mood/","service":"user-service"}
+{"level":"info","message":"POST /api/admin/mood/","service":"user-service"}
+{"level":"info","message":"GET /api/admin/me","service":"user-service"}
+{"level":"info","message":"GET /api/admin/me","service":"user-service"}
+{"level":"info","message":"GET /api/admin/mood/all","service":"user-service"}
+{"level":"info","message":"GET /api/admin/mood/all","service":"user-service"}
+{"level":"info","message":"GET /api/admin/mood/all","service":"user-service"}
+{"level":"info","message":"POST /api/admin/mood/","service":"user-service"}
+{"level":"info","message":"POST /api/admin/mood/Excitement","service":"user-service"}
+{"level":"info","message":"GET /api/admin/mood/all","service":"user-service"}

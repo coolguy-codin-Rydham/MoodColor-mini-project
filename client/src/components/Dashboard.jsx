@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { ChevronRight, Edit, Plus, Save, Trash2 } from "lucide-react";
 import JsCookie from "js-cookie";
 import PropTypes from "prop-types"
-const api_url = "http://localhost:3000/api/admin";
+// const api_url2 = "http://localhost:3000/api/admin";
+const api_url = `${import.meta.env.VITE_API_URL}/admin`
 
 const Dashboard = ({user, setUser}) => {
+  console.log(api_url)
   const [moods, setMoods] = useState([]);
   const [selectedMood, setSelectedMood] = useState({
     mood: "",
