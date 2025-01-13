@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { ChevronRight, Copy, Check, Loader2 } from "lucide-react";
-import Loader from "../components/Loader";
+// import Loader from "../components/Loader";
 
 const Home = () => {
   const [moods, setMoods] = useState([]);
@@ -18,7 +18,12 @@ const Home = () => {
           withCredentials: true,
         }
       );
-      setMoods(response.data.palettes);
+      
+      if (response?.data?.palettes) {
+        setMoods(response.data.palettes);
+      } else {
+        throw new Error("Invalid API response structure.");
+      }
     } catch (error) {
       console.error(error.message);
       setError("Failed to load moods. Please try again later.");
@@ -75,80 +80,88 @@ const Home = () => {
 
         {/* Grid of Mood Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {moods.map((mood) => (
-            <div
-              key={mood.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
-            >
-              {/* Mood Header */}
+          {moods && moods.length > 0 ? (
+            moods.map((mood) => (
               <div
-                className="p-4 border-b cursor-pointer"
-                onClick={() =>
-                  setSelectedMood(selectedMood === mood ? null : mood)
-                }
+                key={mood.id}
+                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
-                <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-semibold text-gray-900">
-                    {capitalizeFirstLetter(mood.name)}
-                  </h2>
-                  <ChevronRight
-                    className={`transform transition-transform duration-200 ${
-                      selectedMood === mood ? "rotate-90" : ""
-                    }`}
-                  />
-                </div>
-              </div>
-
-              {/* Preview Stripe */}
-              <div className="h-3 flex">
-                {mood.palette.map((color, index) => (
-                  <div
-                    key={index}
-                    className="flex-1"
-                    style={{ backgroundColor: color }}
-                  />
-                ))}
-              </div>
-
-              {/* Expanded Color Details */}
-              {selectedMood === mood && (
-                <div className="p-4 space-y-4">
-                  <div className="grid grid-cols-1 gap-4">
-                    {mood.palette.map((color, index) => (
-                      <div
-                        key={index}
-                        className="group flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-50"
-                      >
-                        {/* Color Preview */}
-                        <div
-                          className="w-16 h-16 rounded-lg shadow-inner"
-                          style={{ backgroundColor: color }}
-                        />
-
-                        {/* Color Code and Copy Button */}
-                        <div className="flex-1 flex items-center justify-between">
-                          <span className="font-mono text-gray-700">
-                            {color}
-                          </span>
-                          <button
-                            onClick={() => handleCopyColor(color)}
-                            className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
-                            title="Copy color code"
-                          >
-                            {copiedColor === color ? (
-                              <Check className="w-5 h-5 text-green-500" />
-                            ) : (
-                              <Copy className="w-5 h-5 text-gray-500" />
-                            )}
-                          </button>
-                        </div>
-                      </div>
-                    ))}
+                {/* Mood Header */}
+                <div
+                  className="p-4 border-b cursor-pointer"
+                  onClick={() =>
+                    setSelectedMood(selectedMood === mood ? null : mood)
+                  }
+                >
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-2xl font-semibold text-gray-900">
+                      {capitalizeFirstLetter(mood.name)}
+                    </h2>
+                    <ChevronRight
+                      className={`transform transition-transform duration-200 ${
+                        selectedMood === mood ? "rotate-90" : ""
+                      }`}
+                    />
                   </div>
                 </div>
-              )}
+
+                {/* Preview Stripe */}
+                <div className="h-3 flex">
+                  {mood.palette?.map((color, index) => (
+                    <div
+                      key={index}
+                      className="flex-1"
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
+                </div>
+
+                {/* Expanded Color Details */}
+                {selectedMood === mood && (
+                  <div className="p-4 space-y-4">
+                    <div className="grid grid-cols-1 gap-4">
+                      {mood.palette?.map((color, index) => (
+                        <div
+                          key={index}
+                          className="group flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-50"
+                        >
+                          {/* Color Preview */}
+                          <div
+                            className="w-16 h-16 rounded-lg shadow-inner"
+                            style={{ backgroundColor: color }}
+                          />
+
+                          {/* Color Code and Copy Button */}
+                          <div className="flex-1 flex items-center justify-between">
+                            <span className="font-mono text-gray-700">
+                              {color}
+                            </span>
+                            <button
+                              onClick={() => handleCopyColor(color)}
+                              className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+                              title="Copy color code"
+                            >
+                              {copiedColor === color ? (
+                                <Check className="w-5 h-5 text-green-500" />
+                              ) : (
+                                <Copy className="w-5 h-5 text-gray-500" />
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">
+                No mood palettes available at the moment.
+              </p>
             </div>
-          ))}
+          )}
         </div>
 
         {/* Empty State */}
