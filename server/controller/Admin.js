@@ -206,7 +206,10 @@ const adminSignIn = async (req, res) => {
 
     const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET);
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      sameSite: "None",
+      secure: true,
+    });
 
     return res.status(200).json({
       message: "Login successful",
