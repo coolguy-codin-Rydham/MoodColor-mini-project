@@ -1,24 +1,27 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { ChevronRight, Copy, Check } from 'lucide-react';
-import Loader from '../components/Loader';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { ChevronRight, Copy, Check, Loader2 } from "lucide-react";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const [moods, setMoods] = useState([]);
   const [selectedMood, setSelectedMood] = useState(null);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [copiedColor, setCopiedColor] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const getAllMoods = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/mood/`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/mood/`,
+        {
+          withCredentials: true,
+        }
+      );
       setMoods(response.data.palettes);
     } catch (error) {
       console.error(error.message);
-      setError('Failed to load moods. Please try again later.');
+      setError("Failed to load moods. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -39,7 +42,12 @@ const Home = () => {
   };
 
   if (loading) {
-    return <Loader/>;
+    // return <Loader/>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 size={100}/>
+      </div>
+    );
   }
 
   return (
@@ -51,7 +59,8 @@ const Home = () => {
             Find Your Perfect Color Mood
           </h1>
           <p className="text-xl text-center text-gray-600 max-w-2xl mx-auto">
-            Explore our curated collection of mood-based color palettes to inspire your next project
+            Explore our curated collection of mood-based color palettes to
+            inspire your next project
           </p>
         </div>
       </div>
@@ -67,18 +76,25 @@ const Home = () => {
         {/* Grid of Mood Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {moods.map((mood) => (
-            <div 
+            <div
               key={mood.id}
               className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
             >
               {/* Mood Header */}
-              <div className="p-4 border-b cursor-pointer" onClick={() => setSelectedMood(selectedMood === mood ? null : mood)}>
+              <div
+                className="p-4 border-b cursor-pointer"
+                onClick={() =>
+                  setSelectedMood(selectedMood === mood ? null : mood)
+                }
+              >
                 <div className="flex items-center justify-between">
                   <h2 className="text-2xl font-semibold text-gray-900">
                     {capitalizeFirstLetter(mood.name)}
                   </h2>
-                  <ChevronRight 
-                    className={`transform transition-transform duration-200 ${selectedMood === mood ? 'rotate-90' : ''}`}
+                  <ChevronRight
+                    className={`transform transition-transform duration-200 ${
+                      selectedMood === mood ? "rotate-90" : ""
+                    }`}
                   />
                 </div>
               </div>
@@ -99,19 +115,21 @@ const Home = () => {
                 <div className="p-4 space-y-4">
                   <div className="grid grid-cols-1 gap-4">
                     {mood.palette.map((color, index) => (
-                      <div 
+                      <div
                         key={index}
                         className="group flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-50"
                       >
                         {/* Color Preview */}
-                        <div 
+                        <div
                           className="w-16 h-16 rounded-lg shadow-inner"
                           style={{ backgroundColor: color }}
                         />
-                        
+
                         {/* Color Code and Copy Button */}
                         <div className="flex-1 flex items-center justify-between">
-                          <span className="font-mono text-gray-700">{color}</span>
+                          <span className="font-mono text-gray-700">
+                            {color}
+                          </span>
                           <button
                             onClick={() => handleCopyColor(color)}
                             className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
