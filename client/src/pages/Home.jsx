@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ChevronRight, Copy, Check } from 'lucide-react';
+import Loader from '../components/Loader';
 
 const Home = () => {
   const [moods, setMoods] = useState([]);
@@ -38,7 +39,7 @@ const Home = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader/>;
   }
 
   return (
