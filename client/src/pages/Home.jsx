@@ -18,7 +18,7 @@ const Home = () => {
           withCredentials: true,
         }
       );
-      
+      console.log(response);
       if (response?.data?.palettes) {
         setMoods(response.data.palettes);
       } else {
